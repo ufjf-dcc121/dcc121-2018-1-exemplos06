@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Exemplo 07</title>
+    <style>
+      body > div{
+        width: 400px;
+        height: 300px;
+        background-color: lightgreen;
+        position: relative;
+      }
+      .parede{
+        width: 20px;
+        height: 20px;
+        border: 1px solid black;
+        line-height: 20px;
+        text-align: center;
+        position: absolute;
+      }
+      div > div{
+        top: 20px;
+        left: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Exemplo 07</h1>
+    <div>
+      <div class="parede">A</div>
+    </div>
+    <script>
+      var mundo = {
+        linha : 1,
+        coluna : 2,
+        celulas : [
+          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [1,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0],
+          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        ]
+      }
+      var divA = document.querySelector("div>div");
+      var mapa = document.querySelector("body>div");
+
+      window.addEventListener('keydown', teclaPressionada);
+
+      function teclaPressionada(e){
+        console.log("Tecla: "+e.keyCode);
+        switch (e.keyCode) {
+          case 37:
+            mundo.coluna--;
+            atualizarMundo();
+            break;
+          case 39:
+            mundo.coluna++;
+            atualizarMundo();
+            break;
+          case 38:
+            mundo.linha--;
+            atualizarMundo();
+            break;
+          case 40:
+            mundo.linha++;
+            atualizarMundo();
+            break;
+          default:
+
+        }
+      }
+
+      function atualizarMundo(){
+        mapa.innerHTML="";
+        mapa.appendChild(divA);
+        divA.style.left = mundo.coluna*20+"px";
+        divA.style.top = mundo.linha*20+"px";
+        for (var l = 0; l < mundo.celulas.length; l++) {
+          for (var c = 0; c < mundo.celulas[l].length; c++) {
+            if(mundo.celulas[l][c]!==0){
+              novoDiv = document.createElement("div");
+              novoDiv.classList.add("parede");
+              novoDiv.style.left = 20*c+"px";
+              novoDiv.style.top = 20*l+"px";
+              mapa.appendChild(novoDiv);
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

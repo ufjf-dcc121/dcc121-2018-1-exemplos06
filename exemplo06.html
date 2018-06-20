@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Exemplo06</title>
+  </head>
+  <body>
+    <h1>Exemplo 06</h1>
+    <form name="soma">
+      <label for="n">Número</label>
+      <input type="number" name="n" id="n"/>
+      <input type="submit" name="somar" value="Somar" />
+    </form>
+    <p>Média: <span>0</span>
+    <ul></ul>
+    <script>
+      document.soma.addEventListener('submit', adicionar);
+      var lista = document.querySelector('ul');
+      var media = document.querySelector('span');
+      var soma = 0;
+      var qtd = 0;
+
+      function adicionar(e) {
+          e.preventDefault();
+
+          var novoLi = document.createElement('li');
+          novoLi.textContent = document.soma.n.value;
+          lista.appendChild(novoLi);
+          soma += Number(document.soma.n.value);
+          qtd++;
+          media.textContent = soma/qtd;
+          document.soma.n.value = "";
+      }
+    </script>
+  </body>
+</html>

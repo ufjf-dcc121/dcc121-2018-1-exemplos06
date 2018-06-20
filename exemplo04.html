@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Exemplo 04</title>
+  </head>
+  <body>
+    <h1>Exemplo 04</h1>
+    <form name="pessoa">
+      <input type="text" name="alcunha" value="" />
+      <input type="text" name="idade" value="" />
+      <input type="submit" name="enviar" value="Envie sua resposta"/>
+      <input type="reset"/>
+    </form>
+    <script>
+      document.pessoa.addEventListener('submit', mostraPessoa);
+
+      function mostraPessoa(evento){
+        evento.preventDefault();
+        console.log(document.pessoa.alcunha.value);
+        console.log(document.pessoa.idade.value);
+        console.dir(evento);
+      }
+
+    </script>
+
+  </body>
+</html>
