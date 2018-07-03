@@ -23,11 +23,12 @@
   <body>
     <h1>Exemplo 08</h1>
     <form name="dados">
+      <input type="hidden" name="posicao" value=""/>
       <div><label>Nome: <input type="text" name="nome" required/></label></div>
       <div><label>Nota 1: <input type="number" name="n1" min="0" max="100" required/></label></div>
       <div><label>Nota 2: <input type="number" name="n2" min="0" max="100" required/></label></div>
       <div><label>Nota 3: <input type="number" name="n3" min="0" max="100" required/></label></div>
-      <div><input type="submit"  value="Adicionar"/></div>
+      <div><input type="submit"  value="Adicionar" name="botao"/></div>
     </form>
 
     <table>
@@ -71,17 +72,26 @@
         tr.appendChild(tdNumero);
 
         console.log("Registrando envento Lixo clicado: "+i);
-        spanDelete.addEventListener('click',
-
-        (function (x){
+        spanDelete.addEventListener('click',(function (x){
           return function() {
               console.log("Lixo clicado: "+x);
               notas.splice(x, 1);
+              limpaFormulario();
               apresentaDados();
           }
-        })(i)
+        })(i));
 
-        );
+        spanEdit.addEventListener('click',(function (x){
+          return function() {
+              console.log("Lápis clicado: "+x);
+              document.dados.nome.value = notas[x].nome;
+              document.dados.n1.value = notas[x].nota1;
+              document.dados.n2.value = notas[x].nota2;
+              document.dados.n3.value = notas[x].nota3;
+              document.dados.posicao.value = x;
+              document.dados.botao.value = "Salvar";
+          }
+        })(i));
 
         var tdNome = document.createElement("td");
         tdNome.textContent = aluno.nome;
@@ -102,15 +112,34 @@
       }
     }
 
+    function limpaFormulario(){
+      document.dados.reset();
+      document.dados.posicao.value = '';
+      document.dados.botao.value = "Adicionar";
+    }
+    
     function criaAluno(){
       var nome = document.dados.nome.value;
       var nota1 = document.dados.n1.value;
       var nota2 = document.dados.n2.value;
       var nota3 = document.dados.n3.value;
-      document.dados.reset();
+      limpaFormulario();
 
       var aluno = {nome: nome, nota1:nota1, nota2:nota2, nota3:nota3};
       notas.push(aluno);
+      apresentaDados();
+    }
+
+    function salvaAluno(){
+      var posicao = document.dados.posicao.value;
+      var nome = document.dados.nome.value;
+      var nota1 = document.dados.n1.value;
+      var nota2 = document.dados.n2.value;
+      var nota3 = document.dados.n3.value;
+      limpaFormulario();
+
+      var aluno = {nome: nome, nota1:nota1, nota2:nota2, nota3:nota3};
+      notas[posicao] = aluno;
       apresentaDados();
     }
 
@@ -118,7 +147,11 @@
 
     function enviaFormulario(e){
       e.preventDefault();
-      criaAluno();
+      if(document.dados.posicao.value === ''){
+        criaAluno();
+      } else {
+        salvaAluno();
+      }
     }
 
   </script>
