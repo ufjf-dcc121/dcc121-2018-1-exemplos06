@@ -15,6 +15,9 @@
         text-align: center;
         border: 1px solid black;
       }
+      td span{
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -49,13 +52,36 @@
     function apresentaDados(){
       var tbody = document.querySelector("tbody");
       tbody.innerHTML = "";
-      for (aluno of notas) {
+      for (var i = 0; i< notas.length; i++) {
+        var aluno = notas[i];
+
         var tr = document.createElement("tr");
         tbody.appendChild(tr);
 
         var tdNumero = document.createElement("td");
-        tdNumero.textContent = "?";
+        var spanId = document.createElement("span");
+        spanId.textContent = i+1;
+        var spanEdit = document.createElement("span");
+        spanEdit.innerHTML = "&#x1f589;"
+        var spanDelete = document.createElement("span");
+        spanDelete.innerHTML = "&#x1f5d1;"
+        tdNumero.appendChild(spanId);
+        tdNumero.appendChild(spanEdit);
+        tdNumero.appendChild(spanDelete);
         tr.appendChild(tdNumero);
+
+        console.log("Registrando envento Lixo clicado: "+i);
+        spanDelete.addEventListener('click',
+
+        (function (x){
+          return function() {
+              console.log("Lixo clicado: "+x);
+              notas.splice(x, 1);
+              apresentaDados();
+          }
+        })(i)
+
+        );
 
         var tdNome = document.createElement("td");
         tdNome.textContent = aluno.nome;
