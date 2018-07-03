@@ -37,16 +37,63 @@
           <th>Nota 3</th>
         </tr>
       </thead>
-    <tbody>
-
-    </tbody>
+    <tbody></tbody>
   </table>
   <script>
     var notas = [
       {nome:"Fulano", nota1: 60, nota2: 70, nota3: 80},
       {nome:"Beltrano", nota1: 80, nota2: 40, nota3: 60},
     ];
+    apresentaDados();
 
+    function apresentaDados(){
+      var tbody = document.querySelector("tbody");
+      tbody.innerHTML = "";
+      for (aluno of notas) {
+        var tr = document.createElement("tr");
+        tbody.appendChild(tr);
+
+        var tdNumero = document.createElement("td");
+        tdNumero.textContent = "?";
+        tr.appendChild(tdNumero);
+
+        var tdNome = document.createElement("td");
+        tdNome.textContent = aluno.nome;
+        tr.appendChild(tdNome);
+
+        var tdNota1 = document.createElement("td");
+        tdNota1.textContent = aluno.nota1;
+        tr.appendChild(tdNota1);
+
+        var tdNota2 = document.createElement("td");
+        tdNota2.textContent = aluno.nota2;
+        tr.appendChild(tdNota2);
+
+        var tdNota3 = document.createElement("td");
+        tdNota3.textContent = aluno.nota3;
+        tr.appendChild(tdNota3);
+
+      }
+    }
+
+    function criaAluno(){
+      var nome = document.dados.nome.value;
+      var nota1 = document.dados.n1.value;
+      var nota2 = document.dados.n2.value;
+      var nota3 = document.dados.n3.value;
+      document.dados.reset();
+
+      var aluno = {nome: nome, nota1:nota1, nota2:nota2, nota3:nota3};
+      notas.push(aluno);
+      apresentaDados();
+    }
+
+    document.dados.addEventListener("submit", enviaFormulario);
+
+    function enviaFormulario(e){
+      e.preventDefault();
+      criaAluno();
+    }
 
   </script>
   </body>
